@@ -2,16 +2,22 @@ pipeline {
     agent any
 
     stages {
-        stage('Build Docker Image') {
+
+        stage('Docker Compose Down') {
             steps {
-                sh 'docker build -t osama-cicd-app .'
+                sh 'docker compose down || true'
             }
         }
 
-        stage('Run Container') {
+        stage('Docker Compose Build') {
             steps {
-                sh 'docker rm -f osama-cicd-container || true'
-                sh 'docker run -d --name osama-cicd-container -p 8088:80 osama-cicd-app'
+                sh 'docker compose build'
+            }
+        }
+
+        stage('Docker Compose Up') {
+            steps {
+                sh 'docker compose up -d'
             }
         }
     }
