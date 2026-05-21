@@ -5,20 +5,21 @@ pipeline {
 
         stage('Docker Compose Down') {
             steps {
-                sh 'docker-compose down || true'
+                sh '/usr/bin/docker-compose down || true'
             }
         }
 
         stage('Docker Compose Build') {
             steps {
-                sh 'docker-compose build'
+                sh '/usr/bin/docker-compose build'
             }
         }
 
         stage('Docker Compose Up') {
             steps {
-                sh 'docker-compose up -d'
+                sh '/usr/bin/docker-compose up -d'
             }
         }
+
     }
 }
