@@ -3,21 +3,22 @@ pipeline {
 
     stages {
 
-        stage('Docker Compose Down') {
+        stage('Stop Old Container') {
             steps {
-                sh '/usr/bin/docker-compose down || true'
+                sh 'docker stop osama-app || true'
+                sh 'docker rm osama-app || true'
             }
         }
 
-        stage('Docker Compose Build') {
+        stage('Build Image') {
             steps {
-                sh '/usr/bin/docker-compose build'
+                sh 'docker build -t osama-devops-app .'
             }
         }
 
-        stage('Docker Compose Up') {
+        stage('Run Container') {
             steps {
-                sh '/usr/bin/docker-compose up -d'
+                sh 'docker run -d -p 8090:80 --name osama-app osama-devops-app'
             }
         }
 
